@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="https://jnjinnovation.com/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="resources/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Innovation Ecosystem Heatmap</title>
+  </head>
+  <body onload="initialLoad();">
+    <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color: #fff;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="resources/JJI_Logo_Transparent.png" width="278" height="35">
+          | Innovation Ecosystem Heatmap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-8 border-end" >
+          <div id="content">
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <div id="regions_div" style="width: 100%; min-height: 450px;" class="center"></div>
+            
+            <div class="ex4" style="margin-top:5px;">
+              <div style="margin-inline:15px;">
+                <h3>Ecosystem Data</h3>
+                
+                <div id="ecosystemData">
+                  Selected State: None
+                  <br><h1>No information to show</h1>
+                  <p style="text-align: center;">Click on a state to show related patents/NIH data</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      </div>
+        <div class="col-4">
+          <div style="width: 100%;"class="center">
+
+            <!-- <h2>Select a Therapeutic Area</h2>
+
+            <select class="form-select" aria-label="Select a Therapeutic Area" id="TA" required>
+              <option selected disabled value="">Choose...</option>
+              <option value="oncology">Oncology</option>
+              <option value="Hematologic Malignancies">Hematologic Malignancies</option>
+              <option value="B-cell Malignancies">B-cell Malignancies</option>
+              <option value="Plasma Cell Malignancies">Plasma Cell Malignancies</option>
+              <option value="Myeloid Malignancies">Myeloid Malignancies</option>
+              <option value="Cancer">Cancer</option>
+            </select> -->
+
+            <h2>Enter Keyword</h2>
+
+            <!-- Select Operator (AND / OR) and Enter Keyword Field -->
+            <div class="input-group mb-3">
+
+              <div class="input-group-prepend">
+                <select id="andOr" class="form-select" aria-label="default-select">
+                  <option value="AND"selected="AND">AND</option>
+                  <option value="OR">OR</option>
+                </select>
+              </div>
+
+              <input class="form-control" type="search" placeholder="Ex. Oncology" id="inputKey">
+
+              <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" onclick="addKeyword()" type="button">
+                      <i class="fa fa-plus"></i>
+                  </button>
+              </div>
+            </div>
+
+            <!-- <input style="width:90%;" type="text" placeholder="Ex. Oncology" name="inputKey" id="inputKey"> -->
+            <!-- <button onclick="addKeyword()">⨁</button><br> -->
+
+            <div class="ex3" style="margin-top:5px;">
+              <div style="margin-inline:15px;">
+                Results contain:
+                <div id="keywords"></div>
+              </div>
+
+            </div>
+
+            <h2>
+              Select Data Source
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" title="Patents: Updates quarterly <br>NIH: Updates weekly">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </h2>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="data-source">
+              <input type="radio" class="btn-check" name="btnradio" id="patentradio" autocomplete="off" checked>
+              <label class="btn btn-outline-secondary" for="patentradio">Patents</label>
+            
+              <input type="radio" class="btn-check" name="btnradio" id="nihradio" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="nihradio">NIH</label>
+            
+              <input type="radio" class="btn-check" name="btnradio" id="allradio" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="allradio">Combined</label>
+            </div>
+            <h2>
+              Select Time Range
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" title="Q1: January 1 - March 31 <br>Q2: April 1 - June 30 <br>Q3: July 1 - September 30 <br>Q4: October 1 - December 31 <br>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </h2>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <select class="form-select" aria-label="default-select" id="startQ">
+                  <option value="-01-01">Q1</option>
+                  <option value="-04-01">Q2</option>
+                  <option value="-07-01">Q3</option>
+                  <option value="-10-01">Q4</option>
+                </select>
+              </div>
+              <div class="input-group-append" id="startYDiv" style="display: inline;">
+              </div>
+              <b>&nbsp;&nbsp; To &nbsp;&nbsp;</b>
+              <div class="input-group-append">
+                <select class="form-select" aria-label="default-select" id="endQ">
+                  <option value="-03-31">Q1</option>
+                  <option value="-06-30">Q2</option>
+                  <option value="-09-30">Q3</option>
+                  <option value="-12-31">Q4</option>
+                </select>
+              </div>
+              <div class="input-group-append" id="endYDiv" style="display: inline;">
+              </div>
+
+            </div>
+            
+            <h2>
+              Show Deviation Map
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" title="The difference between the average results from the specified time range above and the results from the latest quarter available (Q3 of 2022)">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </h2>
+            <label class="switch">
+              <input id="deviation" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+            <div class="d-grid gap-2" style="margin-top:15px;">
+              <button id="genBtn"class="btn btn-primary" style="background-color: rgb(10,88,202);" type="button" onclick="generateHeatMap()">
+                <div id="generateButton">
+                  Generate Heat Map
+                </div>
+                
+                
+              </button>
+            </div>
+          </div>  
+        </div>
+    </div>    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="resources/script.js"></script>
+  </body>
+</html>
